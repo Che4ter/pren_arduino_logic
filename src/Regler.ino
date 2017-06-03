@@ -7,9 +7,6 @@
  *
  */
 
-/* Initialisierung vom Port 10 (Echopin) und Port 11 (Triggerpin) f�r den Ultraschall Sensor
- */
-
 void initUltraschall() {
 	//Links
 	pinMode(trigPinLinks, OUTPUT);
@@ -22,19 +19,18 @@ void initUltraschall() {
 
 /* Blocknummer 10100 - Auslesen vom Ultraschallsensor
  */
-void readUltraschallLinks() {
+long readUltraschallLinks() {
 	digitalWrite(trigPinLinks, LOW);  // Added this line
 	delayMicroseconds(2); // Added this line
 	digitalWrite(trigPinLinks, HIGH);
 	delayMicroseconds(10); // Added this line
 	digitalWrite(trigPinLinks, LOW);
-	durationRK0Links = pulseIn(echoPinLinks, HIGH);
-	reglerDistanzIstwertRK0Links = (durationRK0Links / 2) / 2.9;
+	long durationLinks = pulseIn(echoPinLinks, HIGH);
 
 	delay(5);
+	return(durationLinks / 2) / 2.9;
 }
-
-void readUltraschallRechts() {
+ readUltraschallRechts() {
 	digitalWrite(trigPinRechts, LOW);  // Added this line
 	delayMicroseconds(2); // Added this line
 	digitalWrite(trigPinRechts, HIGH);
@@ -42,7 +38,6 @@ void readUltraschallRechts() {
 	digitalWrite(trigPinRechts, LOW);
 	durationRK0Rechts = pulseIn(echoPinRechts, HIGH);
 	reglerDistanzIstwertRK0Rechts = (durationRK0Rechts / 2) / 2.9;
-
 	delay(5);
 }
 
@@ -86,17 +81,14 @@ long* fillArrayIstwert(long istwert) {
 /* Blocknummer 10000 - Addition ReglerSollwert und ReglerKorrektur
  */
 float block10000(float reglerSollwert, float reglerKorrektur) {
-
 	float summe;
 	summe = reglerSollwert + reglerKorrektur;
-
 	return summe;
 }
 
 /* Blocknummer 10010 - Differenz zwischen ReglerSollwert und ReglerIstwert
  */
 float block10010(float reglerSollMitKorrektur, float reglerDistanzIstwert) {
-
 	float differenz;
 	differenz = reglerSollMitKorrektur - reglerDistanzIstwert;
 
@@ -106,7 +98,6 @@ float block10010(float reglerSollMitKorrektur, float reglerDistanzIstwert) {
 /* Blocknummer 10020 - P-Gain Berechnung
  */
 float block10020(float i1, float i2, float i3) {
-
 	float gain;
 	gain = (i1 * i2) / i3;
 
@@ -116,7 +107,6 @@ float block10020(float i1, float i2, float i3) {
 /* Blocknummer 10030 - Limit der Korrektur
  */
 float block10030(float input, float LP, float LM) {
-
 	float output;
 
 	if (input > LP) {
@@ -143,7 +133,6 @@ float block10040(float reglerAusgangMitLimit, float speedSollwert) {
 /* Blocknummer 10050 - Limit von PRZ Ansteuerung Motor
  */
 float block10050(float input, float LP, float LM) {
-
 	float output;
 
 	if (input > LP) {
@@ -159,9 +148,7 @@ float block10050(float input, float LP, float LM) {
 
 /* Blocknummer 10060 - Switch Block f�r Motor Sollwert
  */
-float block10060(float reglerOutput, float externalSpeed,
-bool reglerEinBefehl) {
-
+float block10060(float reglerOutput, float externalSpeed, bool reglerEinBefehl) {
 	float switchOutput;
 
 	if (reglerEinBefehl) {
@@ -176,7 +163,6 @@ bool reglerEinBefehl) {
 /* Blocknummer 10070 - Skallierung von Sollwert Prozent in Sollwert PWM
  */
 float block10070(float sollwertPRZ) {
-
 	float sollwertPWM;
 
 	sollwertPWM = 255.0 * (sollwertPRZ / 100.0);

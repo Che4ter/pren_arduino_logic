@@ -119,9 +119,6 @@ void SerialCommunication::readSerialData() {
         else if(incomingPacket.curLoc >= (incomingPacket.payloadLength + 4))
         {
           //  Serial.println("package complete");
-        //    serialPacket packetResponse = incomingPacket;
-         //   packetResponse.type = 1;
-         //   sendPacket(packetResponse);
             _inComingPacketComplete = true;
         }
     }

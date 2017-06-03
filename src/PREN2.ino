@@ -10,7 +10,6 @@ void setup() {
 	Serial.begin(9600);
 
 	initUltraschall();
-
 	// Initialize PWM
 	pinMode(statpin, OUTPUT);
 
@@ -45,68 +44,64 @@ void setup() {
 
 	schlitten->setSpeed(150);
 	schlitten->run(FORWARD);
-	kurveState = ST1_KurveAus;
-	//wechsleStateParcour(ST11_WartenAufKurveLinks);
-
+	kurveState = KURV_AUS;
+	wechsleStateParcour(PAR_FAHRZEUG_AUSGESCHALTET);
 }
 
 void handleIncomingPacket(SerialCommunication::serialPacket &packet) {
-	//Serial.println("Package received");
-	//Serial.println(packet.commandID);
-
 	switch (packet.commandID) {
-	case COMMAND_SWITCH_STATE:
-		//Serial.println(packet.payload[0]);
-
-		switch (packet.payload[0]) {
-		case COMMAND_STATE_START:
-			wechsleStateParcour(ST2_FahrzeugInitialisierung);
-			break;
-		case COMMAND_STATE_DRIVE1:
-			wechsleStateParcour(ST3_ParkourErsteCM);
-			break;
-		case COMMAND_STATE_BEFORE_CURVE:
-			wechsleStateParcour(ST11_WartenAufKurveLinks);
-			break;
-		//currentMainState = (MAINSTATES) packet.payload[0];
-		//Serial.print("STATE:");
-		//	Serial.println(packet.payload[0], HEX);
-		}
+		case COMMAND_SWITCH_STATE:
+			switch (packet.payload[0]) {
+				case COMMAND_STATE_START:
+					wechsleStateParcour(PAR_FAHRZEUG_INITIALISIERUNG);
+					break;
+				case COMMAND_STATE_DRIVE1:
+					wechsleStateParcour(PAR_ERSTE_CM);
+					break;
+				case COMMAND_STATE_BEFORE_CURVE:
+						wechsleStateParcour(PAR_WARTE_AUF_KURVE);
+						break;
+					}
+			//currentMainState = (MAINSTATES) packet.payload[0];
+			//Serial.print("STATE:");
+			//	Serial.println(packet.payload[0], HEX);
 		break;
-	case COMMAND_STOP:
-		motorGo(0, 3, 255);
-		motorGo(1, 3, 255);
-		wechsleStateParcour(ST31_STOP);
-		//currentMainState = (MAINSTATES) packet.payload[0];
-		//Serial.print("STATE:");
-		//	Serial.println(packet.payload[0], HEX);
-		break;
-	case COMMAND_RESET:
+		case COMMAND_STOP:
 			motorGo(0, 3, 255);
 			motorGo(1, 3, 255);
-			wechsleStateParcour(ST31_STOP);
+			wechsleStateParcour(PAR_STOP);
+			//currentMainState = (MAINSTATES) packet.payload[0];
+			//Serial.print("STATE:");
+			//	Serial.println(packet.payload[0], HEX);
+			break;
+			case COMMAND_RESET:
+				motorGo(0, 3, 255);
+				motorGo(1, 3, 255);
+				wechsleStateParcour(PAR_STOP);
 
-			soft_restart();
-			break;
-	case COMMAND_SET_DIRECTION:
-			parcourDirection = packet.payload[0];
-			break;
-	case COMMAND_SET_SPEED_STAIR:
-			speedStair = packet.payload[0];
-			break;
-	case COMMAND_SET_SPEED_PARCOUR:
-			speedParcour = packet.payload[0];
-			break;
-	default:
-		break;
-
+				soft_restart();
+				break;
+			case COMMAND_SET_DIRECTION:
+				parcourDirection = packet.payload[0];
+				break;
+			case COMMAND_SET_SPEED_STAIR:
+				speedStair = packet.payload[0];
+				break;
+			case COMMAND_SET_SPEED_PARCOUR:
+				speedParcour = packet.payload[0];
+				break;
+			default:
+				break;
 	}
 }
-
 // The loop function is called in an endless loop
 void loop() {
-	 startParkour();
 
+	startParkour();
+//startParkour();
+	// fahreMitRegelungSensorRechts();
+	//motorGo(0, CW, 150);
+	//motorGo(1, CW, 150);
 	//motorGo(0, CW, 150);
 	//motorGo(1, CCW, 100);
 

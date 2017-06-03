@@ -11,8 +11,6 @@
  */
 
 void startSpurRegelung0(int speed) {
-
-
 	reglerKorrekturRK0 = 0.0;
 	reglerDistanzSollwertRK0 = 100.0;
 	reglerSollwertMitKorrekturRK0 = block10000(reglerDistanzSollwertRK0,
@@ -38,5 +36,4 @@ void startSpurRegelung0(int speed) {
 
 	reglerSollwertPWM_floatRK0 = block10070(reglerSollwertPRZ_floatRK0);
 	reglerSollwertPWM_IntRK0 = (int) reglerSollwertPWM_floatRK0;
-
 }

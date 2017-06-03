@@ -11,7 +11,6 @@
  */
 
 void startSpurRegelung1(int speed) {
-
 	speedMotorBetriebRK1 = speed; // in PRZ
 	reglerAusgangGainMitLimitRK1 = reglerAusgangGainMitLimitRK0 * (-1);
 	reglerOutputRK1 = block10040(reglerAusgangGainMitLimitRK1, speedMotorBetriebRK0);
@@ -25,6 +24,4 @@ void startSpurRegelung1(int speed) {
 
 	reglerSollwertPWM_floatRK1 = block10070(reglerSollwertPRZ_floatRK1);
 	reglerSollwertPWM_IntRK1 = (int) reglerSollwertPWM_floatRK1;
-
 }
-

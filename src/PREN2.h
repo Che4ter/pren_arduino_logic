@@ -21,15 +21,15 @@
 #define trigPinRechts 2 // Sensor auf Seite Motor Rechts (RHO)
 #define echoPinRechts 3 // Sensor auf Seite Motor Rechts (RHO)
 
-#define trigPinLinks 0 // Sensor auf Seite Motor Links (LH1)
-#define echoPinLinks 1 // Sensor auf Seite Motor Links (LH1)
+#define trigPinLinks 11 // Sensor auf Seite Motor Links (LH1)
+#define echoPinLinks 10 // Sensor auf Seite Motor Links (LH1)
 
-//0 = Links
-//1 = Rechts
+//0 = Links Kurve
+//1 = Rechts Kurve
 int parcourDirection = 0;
 
 int speedStair = 50;
-int speedParcour = 80;
+int speedParcour = 50;
 /*  VNH2SP30 pin definitions
  xxx[0] controls '1' outputs
  xxx[1] controls '2' outputs */
@@ -104,22 +104,18 @@ SerialCommunication serialHandler;
 int speedZentrifuge;
 
 typedef enum {
-	ST1_FahrzeugAusgeschaltet,
-	ST2_FahrzeugInitialisierung,
-	ST3_ParkourErsteCM,
-	ST4_ParkourGeradeAusFahren,
-	ST11_WartenAufKurveLinks,
-	ST12_AbarbeitenKurveLinks,
-	ST13_WartenAufKurveRechts,
-	ST14_AbarbeitenKurveRechts,
-	ST20_ParkourGeradeAusFahren,
-	ST22_ParkourGeradeausFahren,
-	ST25_ParkourVorbereitenEnde,
-	ST30_ParkourEnde,
-	ST31_STOP,
+	PAR_FAHRZEUG_AUSGESCHALTET,
+	PAR_FAHRZEUG_INITIALISIERUNG,
+	PAR_ERSTE_CM,
+	PAR_GERADEAUS_STAIR,
+	PAR_WARTE_AUF_KURVE,
+	PAR_FAHRE_KURVE_LINKS,
+	PAR_FAHRE_KURVE_RECHTS,
+	PAR_FAHRE_GERADEAUS_BIS_ENDE,
+	PAR_STOP,
 } PARKOUR_STATES;
 
-PARKOUR_STATES parkourState = ST1_FahrzeugAusgeschaltet;
+PARKOUR_STATES parkourState = PAR_FAHRZEUG_AUSGESCHALTET;
 
 
 typedef enum {
@@ -179,17 +175,17 @@ typedef enum {
 ZENTRIFUGE_EVENTS zentrifugeEvent;
 
 typedef enum {
-	ST1_KurveAus = 1,
-	ST2_FahreAufPos1 = 2,
-	ST3_Drehung90Grad = 3,
-	ST4_FahreAufPos2 = 4,
-	ST5_Drehung2 = 5,
-	ST6_FahreAufPos3 = 6,
-	ST7_Drehung3 = 7,
-	ST8_FahreAufPos4 = 8
+	KURV_AUS,
+	KURV_FAHRE_AUF_POS1 ,
+	KURV_DREHUNG_90GRAD,
+	KURV_FAHRE_AUF_POS2,
+	KURV_DREHUNG_HALB_1,
+	KURV_FAHRE_AUF_POS3,
+	KURV_DREHUNG_HALB_2,
+	KURV_FAHRE_DURCH_BOGEN
 } KURVE_STATES;
 
-KURVE_STATES kurveState = ST1_KurveAus;
+KURVE_STATES kurveState = KURV_AUS;
 
 //Do not add code below this line
 #endif /* _testV2_H_ */
