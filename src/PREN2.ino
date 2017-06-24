@@ -90,6 +90,9 @@ void handleIncomingPacket(SerialCommunication::serialPacket &packet) {
 			case COMMAND_SET_SPEED_PARCOUR:
 				speedParcour = packet.payload[0];
 				break;
+		  case COMMAND_SET_DIGIT:
+				digit = packet.payload[0];
+				break;
 			default:
 				break;
 	}

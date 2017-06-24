@@ -75,18 +75,22 @@ void startKurveRechts() {
 		break;
 	case KURV_FAHRE_AUF_POS2:
 		if (fahreNormal(13, 4500, 130, 130)) {
-			wechsleState(KURV_DREHUNG_HALB_1);
+			wechsleState(KURV_FAHRE_IN_WAND);
 		}
 		break;
-
+	case KURV_FAHRE_IN_WAND:
+			if (fahreNormal(13, 2150, 60, 60)) {
+				wechsleState(KURV_DREHUNG_HALB_1);
+			}
+			break;
 	case KURV_DREHUNG_HALB_1:
-		if (fahreKurveRechts(13, 2000, 170, 170)) {
+		if (fahreKurveRechts(13, 2700, 170, 170)) {
 			wechsleState(KURV_FAHRE_AUF_POS3);
 		}
 		break;
 	case KURV_FAHRE_AUF_POS3:
-		if (fahreNormal(13, 2800, 140, 140)) {
-			wechsleState(KURV_DREHUNG_HALB_2);
+		if (fahreNormal(13, 2200, 140, 140)) {
+			wechsleState(KURV_FAHRE_DURCH_BOGEN);
 		}
 		break;
 	case KURV_DREHUNG_HALB_2:
@@ -95,8 +99,10 @@ void startKurveRechts() {
 		}
 		break;
 	case KURV_FAHRE_DURCH_BOGEN:
-	if (fahreNormal(13, 4000, 80, 80)) {
-		wechsleStateParcour(PAR_FAHRE_GERADEAUS_BIS_ENDE);
+	if (fahreNormal(13, 9000, 70, 70)) {
+		//wechsleStateParcour(PAR_FAHRE_GERADEAUS_BIS_ENDE);
+		wechsleStateParcour(PAR_STOP);
+
 	}
 		break;
 	}

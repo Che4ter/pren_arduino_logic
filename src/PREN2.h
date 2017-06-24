@@ -28,6 +28,8 @@
 //1 = Rechts Kurve
 int parcourDirection = 0;
 
+int digit = 0;
+
 int speedStair = 50;
 int speedParcour = 50;
 /*  VNH2SP30 pin definitions
@@ -179,6 +181,7 @@ typedef enum {
 	KURV_FAHRE_AUF_POS1 ,
 	KURV_DREHUNG_90GRAD,
 	KURV_FAHRE_AUF_POS2,
+	KURV_FAHRE_IN_WAND,
 	KURV_DREHUNG_HALB_1,
 	KURV_FAHRE_AUF_POS3,
 	KURV_DREHUNG_HALB_2,
