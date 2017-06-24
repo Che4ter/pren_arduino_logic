@@ -18,7 +18,7 @@ void startParkour(void) {
 
 	switch (parkourState) {
 		case PAR_FAHRZEUG_AUSGESCHALTET:
-		readUltraschallRechts();
+	  	readUltraschallRechts();
 
 			break;
 		case PAR_FAHRZEUG_INITIALISIERUNG:

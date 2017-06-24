@@ -5,6 +5,8 @@
 #include "digitalWriteFast.h"
 #include "softreset/SoftReset.h"
 int pos = 0;
+Servo schalterBeatetigung;
+
 //The setup function is called once at startup of the sketch
 void setup() {
 	Serial.begin(9600);
@@ -44,9 +46,14 @@ void setup() {
 
 	schlitten->setSpeed(150);
 	schlitten->run(FORWARD);
+
 	kurveState = KURV_AUS;
+
+	schalterBeatetigung.attach(schalterBeatetigungPin);
+	schalterBeatetigung.write(wippeRECHTS);
 	wechsleStateParcour(PAR_FAHRZEUG_AUSGESCHALTET);
 }
+
 
 void handleIncomingPacket(SerialCommunication::serialPacket &packet) {
 	switch (packet.commandID) {
@@ -99,9 +106,23 @@ void handleIncomingPacket(SerialCommunication::serialPacket &packet) {
 }
 // The loop function is called in an endless loop
 void loop() {
+startParkour();
+//
+//125 = Mitte
+             // tell servo to go to position in variable 'pos'
 
-	startParkour();
-//startParkour();
+/*for (pos = 0; pos <= 128; pos += 1) { // goes from 0 degrees to 180 degrees
+	 // in steps of 1 degree
+	 schalterBeatetigung.write(pos);              // tell servo to go to position in variable 'pos'
+	 delay(15);                       // waits 15ms for the servo to reach the position
+ }
+ /*Serial.println("wechsel");
+ for (pos = 255; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
+	 schalterBeatetigung.write(pos);              // tell servo to go to position in variable 'pos'
+	 delay(15);                       // waits 15ms for the servo to reach the position
+ }*/
+	//startParkour();
+
 	// fahreMitRegelungSensorRechts();
 	//motorGo(0, CW, 150);
 	//motorGo(1, CW, 150);
@@ -171,3 +192,38 @@ void loop() {
 void serialEvent() {
 	serialHandler.readSerialData();
 }
+
+void setTaster(){
+	if(digit > 3){
+		for (int w = 0; w <= 60; w += 1) { // goes from 0 degrees to 180 degrees
+			 // in steps of 1 degree
+			 schalterBeatetigung.write(pos);              // tell servo to go to position in variable 'pos'
+			 delay(15);                       // waits 15ms for the servo to reach the position
+		 }
+	} else{
+		for (int w = 0; w <= 60; w += 1) { // goes from 0 degrees to 180 degrees
+			 // in steps of 1 degree
+			 schalterBeatetigung.write(w);              // tell servo to go to position in variable 'pos'
+			 delay(15);                       // waits 15ms for the servo to reach the position
+		 }
+	}
+}
+void schlittenTicks(){
+		if (digitalRead(mStop)) {
+			encState = digitalRead(enc);
+  	if (encState != lastEncState) {
+  		ticks++;
+    	lastEncState = encState;
+    Serial.println(ticks);
+		}
+		if (ticks <= 30) {
+		 myMotor->run(FORWARD);
+				} else if (ticks > 30 && ticks <= 60) {
+		 myMotor->run(BACKWARD);
+				} else {
+			ticks = 0;
+			}
+			}
+		if(!digitalRead(mStop))
+		 encState != lastEncState;
+		}

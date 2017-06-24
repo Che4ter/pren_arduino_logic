@@ -10,6 +10,7 @@
 #include "SerialCommunication.h"
 #include "Adafruit_MotorShield.h"
 #include "utility/Adafruit_MS_PWMServoDriver.h"
+#include "Servo.h"
 
 
 
@@ -21,9 +22,14 @@
 #define trigPinRechts 2 // Sensor auf Seite Motor Rechts (RHO)
 #define echoPinRechts 3 // Sensor auf Seite Motor Rechts (RHO)
 
-#define trigPinLinks 11 // Sensor auf Seite Motor Links (LH1)
-#define echoPinLinks 10 // Sensor auf Seite Motor Links (LH1)
+#define trigPinLinks 10 // Sensor auf Seite Motor Links (LH1)
+#define echoPinLinks A3 // Sensor auf Seite Motor Links (LH1)
 
+
+#define schalterBeatetigungPin 9
+#define wippeMITTE 125
+#define wippeLINKS 137
+#define wippeRECHTS 116
 //0 = Links Kurve
 //1 = Rechts Kurve
 int parcourDirection = 0;
