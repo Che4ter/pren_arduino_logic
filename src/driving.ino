@@ -25,9 +25,7 @@ bool fahreNormal(int encoder, int ticks, int speedMotor0, int speedMotor1) {
 		motorGo(0, CW, speedMotor0);
 		motorGo(1, CCW, speedMotor1);
 		return false;
-
 	} else {
-
 		return true;
 	}
 }
@@ -63,9 +61,7 @@ bool fahreKurveRechts(int encoder, int ticks, int speedMotor0, int speedMotor1) 
 		motorGo(0, CCW, speedMotor0);
 		motorGo(1, CCW, speedMotor1);
 		return false;
-
 	} else {
-
 		return true;
 	}
 }

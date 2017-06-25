@@ -4,14 +4,17 @@
 #include <Adafruit_MotorShield.h>
 #include "digitalWriteFast.h"
 #include "softreset/SoftReset.h"
+
+
 int pos = 0;
-Servo schalterBeatetigung;
 
 //The setup function is called once at startup of the sketch
 void setup() {
 	Serial.begin(9600);
 
 	initUltraschall();
+	initButtonPanel();
+
 	// Initialize PWM
 	pinMode(statpin, OUTPUT);
 
@@ -44,13 +47,8 @@ void setup() {
 	pinModeFast(8, OUTPUT);
 	pinModeFast(11, OUTPUT);
 
-	schlitten->setSpeed(150);
-	schlitten->run(FORWARD);
-
 	kurveState = KURV_AUS;
 
-	schalterBeatetigung.attach(schalterBeatetigungPin);
-	schalterBeatetigung.write(wippeRECHTS);
 	wechsleStateParcour(PAR_FAHRZEUG_AUSGESCHALTET);
 }
 
@@ -68,60 +66,39 @@ void handleIncomingPacket(SerialCommunication::serialPacket &packet) {
 				case COMMAND_STATE_BEFORE_CURVE:
 						wechsleStateParcour(PAR_WARTE_AUF_KURVE);
 						break;
-					}
-			//currentMainState = (MAINSTATES) packet.payload[0];
-			//Serial.print("STATE:");
-			//	Serial.println(packet.payload[0], HEX);
-		break;
+			}
+			break;
 		case COMMAND_STOP:
 			motorGo(0, 3, 255);
 			motorGo(1, 3, 255);
 			wechsleStateParcour(PAR_STOP);
-			//currentMainState = (MAINSTATES) packet.payload[0];
-			//Serial.print("STATE:");
-			//	Serial.println(packet.payload[0], HEX);
 			break;
-			case COMMAND_RESET:
-				motorGo(0, 3, 255);
-				motorGo(1, 3, 255);
-				wechsleStateParcour(PAR_STOP);
+		case COMMAND_RESET:
+			motorGo(0, 3, 255);
+			motorGo(1, 3, 255);
+			wechsleStateParcour(PAR_STOP);
 
-				soft_restart();
-				break;
-			case COMMAND_SET_DIRECTION:
-				parcourDirection = packet.payload[0];
-				break;
-			case COMMAND_SET_SPEED_STAIR:
-				speedStair = packet.payload[0];
-				break;
-			case COMMAND_SET_SPEED_PARCOUR:
-				speedParcour = packet.payload[0];
-				break;
-		  case COMMAND_SET_DIGIT:
-				digit = packet.payload[0];
-				break;
-			default:
-				break;
+			soft_restart();
+			break;
+		case COMMAND_SET_DIRECTION:
+			parcourDirection = packet.payload[0];
+			break;
+		case COMMAND_SET_SPEED_STAIR:
+			speedStair = packet.payload[0];
+			break;
+		case COMMAND_SET_SPEED_PARCOUR:
+			speedParcour = packet.payload[0];
+			break;
+		 case COMMAND_SET_DIGIT:
+			digit = packet.payload[0];
+			break;
+		default:
+			break;
 	}
 }
 // The loop function is called in an endless loop
 void loop() {
 startParkour();
-//
-//125 = Mitte
-             // tell servo to go to position in variable 'pos'
-
-/*for (pos = 0; pos <= 128; pos += 1) { // goes from 0 degrees to 180 degrees
-	 // in steps of 1 degree
-	 schalterBeatetigung.write(pos);              // tell servo to go to position in variable 'pos'
-	 delay(15);                       // waits 15ms for the servo to reach the position
- }
- /*Serial.println("wechsel");
- for (pos = 255; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
-	 schalterBeatetigung.write(pos);              // tell servo to go to position in variable 'pos'
-	 delay(15);                       // waits 15ms for the servo to reach the position
- }*/
-	//startParkour();
 
 	// fahreMitRegelungSensorRechts();
 	//motorGo(0, CW, 150);
@@ -192,38 +169,3 @@ startParkour();
 void serialEvent() {
 	serialHandler.readSerialData();
 }
-
-void setTaster(){
-	if(digit > 3){
-		for (int w = 0; w <= 60; w += 1) { // goes from 0 degrees to 180 degrees
-			 // in steps of 1 degree
-			 schalterBeatetigung.write(pos);              // tell servo to go to position in variable 'pos'
-			 delay(15);                       // waits 15ms for the servo to reach the position
-		 }
-	} else{
-		for (int w = 0; w <= 60; w += 1) { // goes from 0 degrees to 180 degrees
-			 // in steps of 1 degree
-			 schalterBeatetigung.write(w);              // tell servo to go to position in variable 'pos'
-			 delay(15);                       // waits 15ms for the servo to reach the position
-		 }
-	}
-}
-void schlittenTicks(){
-		if (digitalRead(mStop)) {
-			encState = digitalRead(enc);
-  	if (encState != lastEncState) {
-  		ticks++;
-    	lastEncState = encState;
-    Serial.println(ticks);
-		}
-		if (ticks <= 30) {
-		 myMotor->run(FORWARD);
-				} else if (ticks > 30 && ticks <= 60) {
-		 myMotor->run(BACKWARD);
-				} else {
-			ticks = 0;
-			}
-			}
-		if(!digitalRead(mStop))
-		 encState != lastEncState;
-		}

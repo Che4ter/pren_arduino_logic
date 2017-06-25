@@ -5,8 +5,8 @@
 void motorOff(int motor) {
 	// Initialize braked
 	for (int i = 0; i < 2; i++) {
-		digitalWrite(inApin[i], LOW);
-		digitalWrite(inBpin[i], LOW);
+		digitalWriteFast(inApin[i], LOW);
+		digitalWriteFast(inBpin[i], LOW);
 	}
 	analogWrite(pwmpin[motor], 0);
 }
@@ -51,4 +51,3 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm) {
 		}
 	}
 }
-

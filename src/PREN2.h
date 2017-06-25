@@ -12,8 +12,6 @@
 #include "utility/Adafruit_MS_PWMServoDriver.h"
 #include "Servo.h"
 
-
-
 #define BRAKEVCC 0
 #define CW   1
 #define CCW  2
@@ -24,7 +22,6 @@
 
 #define trigPinLinks 10 // Sensor auf Seite Motor Links (LH1)
 #define echoPinLinks A3 // Sensor auf Seite Motor Links (LH1)
-
 
 #define schalterBeatetigungPin 9
 #define wippeMITTE 125

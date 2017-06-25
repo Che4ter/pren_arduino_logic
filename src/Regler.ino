@@ -26,11 +26,10 @@ long readUltraschallLinks() {
 	delayMicroseconds(10); // Added this line
 	digitalWrite(trigPinLinks, LOW);
 	long durationLinks = pulseIn(echoPinLinks, HIGH);
-
 	delay(5);
 	return(durationLinks / 2) / 2.9;
 }
- readUltraschallRechts() {
+void readUltraschallRechts() {
 	digitalWrite(trigPinRechts, LOW);  // Added this line
 	delayMicroseconds(2); // Added this line
 	digitalWrite(trigPinRechts, HIGH);

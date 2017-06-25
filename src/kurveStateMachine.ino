@@ -49,7 +49,7 @@ void startKurveLinks() {
 		break;
 	case KURV_FAHRE_DURCH_BOGEN:
 		if (fahreNormal(13, 4000, 60, 60)) {
-			wechsleStateParcour(PAR_STOP);
+			wechsleStateParcour(PAR_FAHRE_GERADEAUS_BIS_ENDE);
 		}
 		break;
 	}
@@ -100,9 +100,7 @@ void startKurveRechts() {
 		break;
 	case KURV_FAHRE_DURCH_BOGEN:
 	if (fahreNormal(13, 4000, 75, 75)) {
-		//wechsleStateParcour(PAR_FAHRE_GERADEAUS_BIS_ENDE);
-		wechsleStateParcour(PAR_STOP);
-
+		wechsleStateParcour(PAR_FAHRE_GERADEAUS_BIS_ENDE);
 	}
 		break;
 	}
