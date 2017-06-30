@@ -5,7 +5,6 @@
 #include "digitalWriteFast.h"
 #include "softreset/SoftReset.h"
 
-
 int pos = 0;
 
 //The setup function is called once at startup of the sketch
@@ -13,7 +12,7 @@ void setup() {
 	Serial.begin(9600);
 
 	initUltraschall();
-	initButtonPanel();
+	//initButtonPanel();
 
 	// Initialize PWM
 	pinMode(statpin, OUTPUT);
@@ -49,9 +48,10 @@ void setup() {
 
 	kurveState = KURV_AUS;
 
+	//initSchlitten();
+
 	wechsleStateParcour(PAR_FAHRZEUG_AUSGESCHALTET);
 }
-
 
 void handleIncomingPacket(SerialCommunication::serialPacket &packet) {
 	switch (packet.commandID) {
@@ -96,6 +96,7 @@ void handleIncomingPacket(SerialCommunication::serialPacket &packet) {
 			break;
 	}
 }
+
 // The loop function is called in an endless loop
 void loop() {
 startParkour();
@@ -152,7 +153,6 @@ startParkour();
 	 startKurve();
 	 }
 */
-
  		SerialCommunication::serialPacket packet =
  				serialHandler.getIncomingPacket();
  		if (packet.curLoc != 0) {

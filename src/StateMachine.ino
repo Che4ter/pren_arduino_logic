@@ -39,7 +39,7 @@ void startParkour(void) {
 
 		case PAR_WARTE_AUF_KURVE:
 			fahreMitRegelungSensorRechts();
-			if (reglerDistanzIstwertRK0Rechts > 200) {
+			if (reglerDistanzIstwertRK0Rechts > 350) {
 				if(parcourDirection == 0){
 					wechsleStateParcour(PAR_FAHRE_KURVE_LINKS);
 				} else	{
@@ -53,25 +53,34 @@ void startParkour(void) {
 			break;
 
 		case PAR_FAHRE_KURVE_RECHTS:
-		startKurveRechts();
+			startKurveRechts();
 			break;
 
 		case PAR_FAHRE_GERADEAUS_BIS_ENDE:
 			fahreMitRegelungSensorRechts();
 			if(parcourDirection == 0){
 				//sofort anhalten da sensor noch nicht funktioniert
-				wechsleStateParcour(PAR_STOP);
 
 				if (readUltraschallLinks() > 400) {
-					wechsleStateParcour(PAR_STOP);
+					wechsleStateParcour(PAR_SET_SCHLITTEN);
 				}
 			}
 			else{
 				if (reglerDistanzIstwertRK0Rechts > 400) {
-						wechsleStateParcour(PAR_STOP);
+						wechsleStateParcour(PAR_SET_SCHLITTEN);
 					}
 			}
 			break;
+		case PAR_SET_SCHLITTEN:
+				motorGo(0, 3, 255);
+				motorGo(1, 3, 255);
+				if(schlittenToPosition())
+				{
+					wechsleStateParcour(PAR_PRESSBUTTON);
+				}
+				break;
+		case PAR_PRESSBUTTON:
+				wechsleStateParcour(PAR_STOP);
 		case PAR_STOP:
 			motorGo(0, 3, 255);
 			motorGo(1, 3, 255);

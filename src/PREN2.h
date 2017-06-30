@@ -48,8 +48,9 @@ const int enc = A0;
 const int mStop = A1;
 int encState = false;
 int lastEncState = false;
-int ticks = 0;
-
+int schlittenTicks = 0;
+int MAXSchlittenTICKS = 0;
+bool schlittenFirstTime = true;
 const int encoderMotor0 = 13;
 const int encoderMotor1 = 12;
 int encStateMotor0 = false;
@@ -117,6 +118,8 @@ typedef enum {
 	PAR_FAHRE_KURVE_LINKS,
 	PAR_FAHRE_KURVE_RECHTS,
 	PAR_FAHRE_GERADEAUS_BIS_ENDE,
+	PAR_SET_SCHLITTEN,
+	PAR_PRESSBUTTON,
 	PAR_STOP,
 } PARKOUR_STATES;
 

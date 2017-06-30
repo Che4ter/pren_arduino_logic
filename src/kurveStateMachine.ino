@@ -22,33 +22,38 @@ void startKurveLinks() {
 		}
 		break;
 	case KURV_DREHUNG_90GRAD:
-		if (fahreKurveLinks(12, 2850, 170, 170)) {
+		if (fahreKurveLinks(12, 2300, 170, 170)) {
 			wechsleState(KURV_FAHRE_AUF_POS2);
 		}
 		break;
 	case KURV_FAHRE_AUF_POS2:
-		if (fahreNormal(13, 4500, 130, 130)) {
-			wechsleState(KURV_DREHUNG_HALB_1);
-		}
-		break;
-
+			if (fahreNormal(13, 4500, 130, 130)) {
+				wechsleState(KURV_FAHRE_IN_WAND);
+			}
+			break;
+	case KURV_FAHRE_IN_WAND:
+			if (fahreNormal(13, 2000, 70, 70)) {
+				wechsleState(KURV_DREHUNG_HALB_1);
+			}
+			break;
 	case KURV_DREHUNG_HALB_1:
-		if (fahreKurveLinks(12, 2000, 170, 170)) {
+		if (fahreKurveLinks(12, 1400, 170, 170)) {
 			wechsleState(KURV_FAHRE_AUF_POS3);
 		}
 		break;
 	case KURV_FAHRE_AUF_POS3:
-		if (fahreNormal(13, 2800, 140, 140)) {
+		if (fahreNormal(13, 1900, 100, 100)) {
 			wechsleState(KURV_DREHUNG_HALB_2);
 		}
 		break;
 	case KURV_DREHUNG_HALB_2:
-		if (fahreKurveLinks(12, 1200, 140, 140)) {
+		if (fahreKurveLinks(12, 500, 140, 140)) {
 			wechsleState(KURV_FAHRE_DURCH_BOGEN);
 		}
 		break;
 	case KURV_FAHRE_DURCH_BOGEN:
-		if (fahreNormal(13, 4000, 60, 60)) {
+		if (fahreNormal(13, 6000, 75, 75)) {
+			speedParcour = 95;
 			wechsleStateParcour(PAR_FAHRE_GERADEAUS_BIS_ENDE);
 		}
 		break;
@@ -64,12 +69,12 @@ void startKurveRechts() {
 		wechsleState(KURV_FAHRE_AUF_POS1);
 		break;
 	case KURV_FAHRE_AUF_POS1:
-		if (fahreNormal(13, 4700, 120, 120)) {
+		if (fahreNormal(13, 4500, 120, 120)) {
 			wechsleState(KURV_DREHUNG_90GRAD);
 		}
 		break;
 	case KURV_DREHUNG_90GRAD:
-		if (fahreKurveRechts(13, 3000, 170, 170)) {
+		if (fahreKurveRechts(13, 2400, 170, 170)) {
 			wechsleState(KURV_FAHRE_AUF_POS2);
 		}
 		break;
@@ -79,17 +84,17 @@ void startKurveRechts() {
 		}
 		break;
 	case KURV_FAHRE_IN_WAND:
-			if (fahreNormal(13, 3200, 70, 70)) {
+			if (fahreNormal(13, 2000, 70, 70)) {
 				wechsleState(KURV_DREHUNG_HALB_1);
 			}
 			break;
 	case KURV_DREHUNG_HALB_1:
-		if (fahreKurveRechts(13, 1900, 170, 170)) {
+		if (fahreKurveRechts(13, 1400, 170, 170)) {
 			wechsleState(KURV_FAHRE_AUF_POS3);
 		}
 		break;
 	case KURV_FAHRE_AUF_POS3:
-		if (fahreNormal(13, 2000, 120, 120)) {
+		if (fahreNormal(13, 1750, 90, 90)) {
 			wechsleState(KURV_DREHUNG_HALB_2);
 		}
 		break;
@@ -99,7 +104,8 @@ void startKurveRechts() {
 		}
 		break;
 	case KURV_FAHRE_DURCH_BOGEN:
-	if (fahreNormal(13, 4000, 75, 75)) {
+	if (fahreNormal(13, 6000, 75, 75)) {
+		speedParcour = 95;
 		wechsleStateParcour(PAR_FAHRE_GERADEAUS_BIS_ENDE);
 	}
 		break;
