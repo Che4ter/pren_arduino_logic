@@ -22,9 +22,7 @@ void startParkour(void) {
 
 			break;
 		case PAR_FAHRZEUG_INITIALISIERUNG:
-			startZentrifuge();
-			myMotor->setSpeed(speedZentrifuge);
-			myMotor->run(FORWARD);
+/**/
 			break;
 
 		case PAR_ERSTE_CM:
@@ -34,11 +32,11 @@ void startParkour(void) {
 			break;
 
 		case PAR_GERADEAUS_STAIR:
-				fahreMitRegelungSensorRechts();
+				fahreMitRegelungSensorRechts(speedStair);
 			break;
 
 		case PAR_WARTE_AUF_KURVE:
-			fahreMitRegelungSensorRechts();
+			fahreMitRegelungSensorRechts(speedParcour);
 			if (reglerDistanzIstwertRK0Rechts > 350) {
 				if(parcourDirection == 0){
 					wechsleStateParcour(PAR_FAHRE_KURVE_LINKS);
@@ -57,7 +55,7 @@ void startParkour(void) {
 			break;
 
 		case PAR_FAHRE_GERADEAUS_BIS_ENDE:
-			fahreMitRegelungSensorRechts();
+			fahreMitRegelungSensorRechts(speedParcour);
 			if(parcourDirection == 0){
 				//sofort anhalten da sensor noch nicht funktioniert
 
@@ -80,6 +78,8 @@ void startParkour(void) {
 				}
 				break;
 		case PAR_PRESSBUTTON:
+				myMotor->setSpeed(speedZentrifuge);
+				zentrifugeState = ST1_Step1;
 				wechsleStateParcour(PAR_STOP);
 		case PAR_STOP:
 			motorGo(0, 3, 255);

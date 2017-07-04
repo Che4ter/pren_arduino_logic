@@ -1,12 +1,12 @@
-void fahreMitRegelungSensorRechts(){
+void fahreMitRegelungSensorRechts(int speedMotoren){
   readUltraschallRechts();
 
   reglerErrorRK0 = block10010(reglerSollwertMitKorrekturRK0,
       reglerDistanzIstwertRK0Rechts);
 
   if ((reglerErrorRK0 <= 100.0) && (reglerErrorRK0 >= -100.0)) {
-    startSpurRegelung0(speedStair);
-    startSpurRegelung1(speedStair);
+    startSpurRegelung0(speedMotoren);
+    startSpurRegelung1(speedMotoren);
   }
 
   motorGo(0, CW, reglerSollwertPWM_IntRK0);

@@ -175,4 +175,3 @@ void startZentrifuge(void) {
 	startZentrifugeStateMachine();
 
 }
-
