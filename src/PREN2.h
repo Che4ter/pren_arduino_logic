@@ -26,7 +26,7 @@
 #define schalterBeatetigungPin 9
 #define wippeMITTE 125
 #define wippeLINKS 137
-#define wippeRECHTS 116
+#define wippeRECHTS 126
 //0 = Links Kurve
 //1 = Rechts Kurve
 int parcourDirection = 0;
@@ -191,7 +191,8 @@ typedef enum {
 	KURV_DREHUNG_HALB_1,
 	KURV_FAHRE_AUF_POS3,
 	KURV_DREHUNG_HALB_2,
-	KURV_FAHRE_DURCH_BOGEN
+	KURV_FAHRE_DURCH_BOGEN,
+	KURV_FAHRE_RETOUR_WAND
 } KURVE_STATES;
 
 KURVE_STATES kurveState = KURV_AUS;

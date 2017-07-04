@@ -13,7 +13,9 @@ void initSchlitten() {
     schlitten->run(FORWARD);
 
   }
-  while(!schlittenToMitte())
+  schlittenFirstTime = true;
+
+  while(!schlittenToLinks())
   {
 
   }
@@ -23,10 +25,9 @@ void initSchlitten() {
   schlittenFirstTime = true;
 }
 
-bool schlittenToPosition(){
+bool schlittenToLinks(){
   if(schlittenFirstTime){
-    setSchlittenTicksFromNumber();
-    schlitten->setSpeed(150);
+    schlitten->setSpeed(200);
     schlittenFirstTime = false;
   }
   encState = digitalRead(enc);
@@ -34,7 +35,28 @@ bool schlittenToPosition(){
       schlittenTicks++;
       lastEncState = encState;
   }
-  if (schlittenTicks <= MAXSchlittenTICKS) {
+  if (schlittenTicks <= 240) {
+      schlitten->run(FORWARD);
+      return false;
+  }
+  else {
+       schlitten->setSpeed(0);
+       return true;
+  }
+}
+bool schlittenToPosition(){
+  if(schlittenFirstTime){
+    //setSchlittenTicksFromNumber();
+    schlitten->setSpeed(200);
+    schlittenFirstTime = false;
+    schlittenTicks = 0;
+  }
+  encState = digitalRead(enc);
+  if (encState != lastEncState) {
+      schlittenTicks++;
+      lastEncState = encState;
+  }
+  if (schlittenTicks <= 300) {
       schlitten->run(FORWARD);
       return false;
   }

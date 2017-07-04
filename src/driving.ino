@@ -29,6 +29,22 @@ bool fahreNormal(int encoder, int ticks, int speedMotor0, int speedMotor1) {
 		return true;
 	}
 }
+bool fahreRetour(int encoder, int ticks, int speedMotor0, int speedMotor1) {
+	encStateMotor1 = digitalReadFast(encoder);
+
+	if (encStateMotor1 != lastEncStateMotor1) {
+		ticksMotor1++;
+		lastEncStateMotor1 = encStateMotor1;
+	}
+
+	if (ticksMotor1 <= ticks) {
+		motorGo(0, CCW, speedMotor0);
+		motorGo(1, CW, speedMotor1);
+		return false;
+	} else {
+		return true;
+	}
+}
 
 bool fahreKurveLinks(int encoder, int ticks, int speedMotor0, int speedMotor1) {
 	encStateMotor1 = digitalReadFast(encoder);
